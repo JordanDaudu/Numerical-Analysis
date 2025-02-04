@@ -1,8 +1,7 @@
 import sympy
-import math
 from colors import bcolors
-
 TOL = 0.0001
+
 
 def generate_intervals(start, end, step=0.1, epsilon=1e-10):
     """
@@ -316,7 +315,7 @@ def initializeSympyPolynomialData():
     """
     x = sympy.symbols('x')
     # get polynomial from user
-    polynomial = (x**2 * math.e**-x**2 + 5*x - 3) * (3*x - 5)
+    polynomial = sympy.cos(x**2 + 5*x + 6) / 2*sympy.exp(-x)
     #print("Polynomial", polynomial)
     derivative = sympy.diff(polynomial, x)
     #print("derivative: ",derivative)
@@ -335,7 +334,8 @@ polynomial, derivative, f, fTag, polynomialDegree = initializeSympyPolynomialDat
 
 # Main code
 # Please input the polynomial you want to use in the function initializeSympyPolynomialData()
-starting_point, ending_point = 0, 1.5
+# Input the starting and ending point of the interval you want to search for roots and the step size
+starting_point, ending_point = -1.5, 2
 search_range = generate_intervals(starting_point, ending_point, step=0.1)
 roots = []
 while True:
@@ -357,6 +357,7 @@ print("=========================================================================
 print(bcolors.ORANGE, f"Searching for roots in the interval [{starting_point}, {ending_point}] in steps of 0.1:", bcolors.ENDC)
 print(bcolors.GOLD ,"Whenever a potential root is found, the method will be applied to the smaller interval to check for convergence.\n", bcolors.ENDC)
 if choice == 1:
+    print(bcolors.OKBLUE, "You have chosen the Bisection Method.", bcolors.ENDC)
     print(bcolors.HEADER, "Trying f to converge first:", bcolors.ENDC)
     for i in range(len(search_range)):
         try:
@@ -408,6 +409,7 @@ if choice == 1:
         print(bcolors.OKGREEN, bcolors.BOLD, f"\nRoots found after merging close roots: {roots}", bcolors.ENDC)
 
 elif choice == 2:
+    print(bcolors.OKBLUE, "You have chosen the Newton-Raphson Method.", bcolors.ENDC)
     for i in range(len(search_range)):
         try:
             a, b = search_range[i]
@@ -432,6 +434,7 @@ elif choice == 2:
         print(bcolors.OKGREEN, bcolors.BOLD, f"\nRoots found after merging close roots: {roots}", bcolors.ENDC)
 
 elif choice == 3:
+    print(bcolors.OKBLUE, "You have chosen the Secant Method.", bcolors.ENDC)
     for i in range(len(search_range)):
         try:
             x0, x1 = search_range[i]
